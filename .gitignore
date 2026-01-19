@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+data/
+checkpoints/
+outputs/
+wandb/
+*.ckpt
+*.pth
+*.pt
+
+.env
+.vscode/
+.DS_Store
