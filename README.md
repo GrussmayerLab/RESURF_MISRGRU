@@ -5,8 +5,8 @@ CPU may work but is not validated
 
 ## Install - (Adjust versions/CUDA to match what you used.)
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+python -m venv .venv_resurf
+source .venv_resurf/bin/activate
 pip install -U pip
 
 pip install torch==2.3.1 torchvision==0.18.1 --index-url https://download.pytorch.org/whl/cu121
