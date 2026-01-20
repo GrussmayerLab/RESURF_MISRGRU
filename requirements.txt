@@ -1,0 +1,25 @@
+numpy
+scipy
+pandas
+tqdm
+
+scikit-image
+opencv-python
+tifffile
+Pillow
+
+scikit-learn
+scikit-image
+matplotlib
+seaborn
+
+nanopyx
+
+# Deep learning (install torch/torchvision separately for CPU/CUDA; see README)
+# torch
+# torchvision
+
+# Only if your code actually imports it:
+# nanopyx
+# lmfit
+# thop

@@ -1,0 +1,1 @@
+from src.losses.losses import fourier_space_loss

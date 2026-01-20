@@ -11,5 +11,7 @@ wandb/
 *.pt
 
 .env
+.venv_resurf
 .vscode/
 .DS_Store
+examples/

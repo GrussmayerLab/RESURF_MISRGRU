@@ -1,0 +1,272 @@
+{
+  "network_hidden_layers_24": {
+    "encoder": {
+      "in_channels": 1,
+      "num_res_blocks" : 2,
+      "kernel_size": 3,
+      "channel_size": 24
+    },
+    "fusion": {
+      "in_channels": 24,
+      "num_hidden_layers" : 2,
+      "hidden_channels": [24, 24],
+      "kernel_sizes": [3, 3]
+    },
+    "decoder": {
+      "deconv": {
+        "in_channels": 24,
+        "num_hidden_layers" : 2,
+        "kernel_size": 3,
+        "padding": 4,
+        "output_padding": 0,
+        "stride": 2,
+        "out_channels": 24
+      },
+      "final": {
+        "in_channels": 24,
+        "kernel_size": 1,
+        "out_channels": 1
+      }
+    }
+  },
+    "network_hidden_layers_22": {
+      "encoder": {
+        "in_channels": 1,
+        "num_res_blocks" : 2,
+        "kernel_size": 3,
+        "channel_size": 22
+      },
+      "fusion": {
+        "in_channels": 22,
+        "num_hidden_layers" : 2,
+        "hidden_channels": [22, 22],
+        "kernel_sizes": [3, 3]
+      },
+      "decoder": {
+        "deconv": {
+          "in_channels": 22,
+          "num_hidden_layers" : 2,
+          "kernel_size": 3,
+          "padding": 4,
+          "output_padding": 0,
+          "stride": 2,
+          "out_channels": 22
+        },
+        "final": {
+          "in_channels": 22,
+          "kernel_size": 1,
+          "out_channels": 1
+        }
+      }
+    },
+    "network_hidden_layers_20": {
+      "encoder": {
+        "in_channels": 1,
+        "num_res_blocks" : 2,
+        "kernel_size": 3,
+        "channel_size": 20
+      },
+      "fusion": {
+        "in_channels": 20,
+        "num_hidden_layers" : 2,
+        "hidden_channels": [20, 20],
+        "kernel_sizes": [3, 3]
+      },
+      "decoder": {
+        "deconv": {
+          "in_channels": 20,
+          "num_hidden_layers" : 2,
+          "kernel_size": 3,
+          "padding": 4,
+          "output_padding": 0,
+          "stride": 2,
+          "out_channels": 20
+        },
+        "final": {
+          "in_channels": 20,
+          "kernel_size": 1,
+          "out_channels": 1
+        }
+      }
+    },
+    "network_hidden_layers_18": {
+      "encoder": {
+        "in_channels": 1,
+        "num_res_blocks" : 2,
+        "kernel_size": 3,
+        "channel_size": 18
+      },
+      "fusion": {
+        "in_channels": 18,
+        "num_hidden_layers" : 2,
+        "hidden_channels": [18, 18],
+        "kernel_sizes": [3, 3]
+      },
+      "decoder": {
+        "deconv": {
+          "in_channels": 18,
+          "num_hidden_layers" : 2,
+          "kernel_size": 3,
+          "padding": 4,
+          "output_padding": 0,
+          "stride": 2,
+          "out_channels": 18
+        },
+        "final": {
+          "in_channels": 18,
+          "kernel_size": 1,
+          "out_channels": 1
+        }
+      }
+    },
+    "network_hidden_layers_16": {
+      "encoder": {
+        "in_channels": 1,
+        "num_res_blocks" : 2,
+        "kernel_size": 3,
+        "channel_size": 16
+      },
+      "fusion": {
+        "in_channels": 16,
+        "num_hidden_layers" : 2,
+        "hidden_channels": [16, 16],
+        "kernel_sizes": [3, 3]
+      },
+      "decoder": {
+        "deconv": {
+          "in_channels": 16,
+          "num_hidden_layers" : 2,
+          "kernel_size": 3,
+          "padding": 4,
+          "output_padding": 0,
+          "stride": 2,
+          "out_channels": 16
+        },
+        "final": {
+          "in_channels": 16,
+          "kernel_size": 1,
+          "out_channels": 1
+        }
+      }
+    },
+    "network_hidden_layers_14": {
+      "encoder": {
+        "in_channels": 1,
+        "num_res_blocks" : 2,
+        "kernel_size": 3,
+        "channel_size": 14
+      },
+      "fusion": {
+        "in_channels": 14,
+        "num_hidden_layers" : 2,
+        "hidden_channels": [14, 14],
+        "kernel_sizes": [3, 3]
+      },
+      "decoder": {
+        "deconv": {
+          "in_channels": 14,
+          "num_hidden_layers" : 2,
+          "kernel_size": 3,
+          "padding": 4,
+          "output_padding": 0,
+          "stride": 2,
+          "out_channels": 14
+        },
+        "final": {
+          "in_channels": 14,
+          "kernel_size": 1,
+          "out_channels": 1
+        }
+      }
+    },
+    "network_hidden_layers_12": {
+      "encoder": {
+        "in_channels": 1,
+        "num_res_blocks" : 2,
+        "kernel_size": 3,
+        "channel_size": 12
+      },
+      "fusion": {
+        "in_channels": 12,
+        "num_hidden_layers" : 2,
+        "hidden_channels": [12, 12],
+        "kernel_sizes": [3, 3]
+      },
+      "decoder": {
+        "deconv": {
+          "in_channels": 12,
+          "num_hidden_layers" : 2,
+          "kernel_size": 3,
+          "padding": 4,
+          "output_padding": 0,
+          "stride": 2,
+          "out_channels": 12
+        },
+        "final": {
+          "in_channels": 12,
+          "kernel_size": 1,
+          "out_channels": 1
+        }
+      }
+    },
+    "network_hidden_layers_10": {
+      "encoder": {
+        "in_channels": 1,
+        "num_res_blocks" : 2,
+        "kernel_size": 3,
+        "channel_size": 10
+      },
+      "fusion": {
+        "in_channels": 10,
+        "num_hidden_layers" : 2,
+        "hidden_channels": [10, 10],
+        "kernel_sizes": [3, 3]
+      },
+      "decoder": {
+        "deconv": {
+          "in_channels": 10,
+          "num_hidden_layers" : 2,
+          "kernel_size": 3,
+          "padding": 4,
+          "output_padding": 0,
+          "stride": 2,
+          "out_channels": 10
+        },
+        "final": {
+          "in_channels": 10,
+          "kernel_size": 1,
+          "out_channels": 1
+        }
+      }
+    },
+    "network_hidden_layers_8": {
+      "encoder": {
+        "in_channels": 1,
+        "num_res_blocks" : 2,
+        "kernel_size": 3,
+        "channel_size": 8
+      },
+      "fusion": {
+        "in_channels": 8,
+        "num_hidden_layers" : 2,
+        "hidden_channels": [8, 8],
+        "kernel_sizes": [3, 3]
+      },
+      "decoder": {
+        "deconv": {
+          "in_channels": 8,
+          "num_hidden_layers" : 2,
+          "kernel_size": 3,
+          "padding": 4,
+          "output_padding": 0,
+          "stride": 2,
+          "out_channels": 8
+        },
+        "final": {
+          "in_channels": 8,
+          "kernel_size": 1,
+          "out_channels": 1
+        }
+      }
+    }
+  }
