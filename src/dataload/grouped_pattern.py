@@ -53,10 +53,7 @@ All file lists are sorted to ensure deterministic ordering across machines.
 
 """
 
-from __future__ import annotations
 
-import os
-import re
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -64,7 +61,7 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 import torch
 from torch.utils.data import Dataset
-
+import random
 
 @dataclass(frozen=True)
 class _FileRecord:
@@ -386,3 +383,88 @@ class GroupedPatternDataset(Dataset):
             "no_target": skipped_no_target,
             "pair_mismatch": skipped_pair_mismatch,
         }
+
+    def filter_by_patterns(self, pattern_ids: Sequence[str]) -> "GroupedPatternDataset":
+        """
+        Create a new dataset view containing only samples whose pattern_id is in `pattern_ids`.
+
+        This does NOT rescan the filesystem. It filters the already-built `self.samples`
+        and rebuilds `pattern_to_indices` so custom samplers still work.
+
+        Parameters
+        ----------
+        pattern_ids:
+            Iterable of PIDs to keep.
+
+        Returns
+        -------
+        GroupedPatternDataset
+            A filtered dataset instance (lightweight view).
+        """
+        keep = set(map(str, pattern_ids))
+
+        # Collect sample indices we want to keep (using current mapping)
+        kept_indices: List[int] = []
+        for pid, idxs in self.pattern_to_indices.items():
+            if pid in keep:
+                kept_indices.extend(idxs)
+        kept_indices.sort()
+
+        # Build a lightweight clone without calling __init__ (no disk rescan)
+        new_ds = object.__new__(GroupedPatternDataset)
+
+        # Copy configuration/state needed by __getitem__
+        new_ds.transform = self.transform
+        new_ds.num_frames = self.num_frames
+        new_ds.pair_by_snr = self.pair_by_snr
+        new_ds.strict = self.strict
+
+        # Copy filters (not strictly needed for __getitem__, but nice to preserve)
+        new_ds.setting_filter = self.setting_filter
+        new_ds.pattern_filter = keep
+        new_ds.snr_filter = self.snr_filter
+
+        # Filter samples
+        new_ds.samples = [self.samples[i] for i in kept_indices]
+
+        # Rebuild pattern_to_indices for the new sample list
+        new_ds.pattern_to_indices = defaultdict(list)
+        for new_i, s in enumerate(new_ds.samples):
+            pid = s["pattern_id"]
+            new_ds.pattern_to_indices[pid].append(new_i)
+
+        new_ds.pattern_ids = sorted(new_ds.pattern_to_indices.keys())
+
+        # Optional: carry skipped stats (still useful)
+        new_ds._skipped = getattr(self, "_skipped", None)
+
+        return new_ds
+
+    def train_val_split(
+        self,
+        *,
+        split_ratio: float = 0.7,
+        seed: int = 42,
+        shuffle: bool = True,
+    ) -> Tuple["GroupedPatternDataset", "GroupedPatternDataset", List[str], List[str]]:
+        """
+        Split the dataset by *pattern_id* (PID) to avoid leakage, then return
+        filtered dataset views.
+
+        Returns
+        -------
+        train_ds, val_ds, train_pids, val_pids
+        """
+        pids = list(self.pattern_to_indices.keys())
+        rng = random.Random(seed)
+        if shuffle:
+            rng.shuffle(pids)
+
+        split_point = int(len(pids) * split_ratio)
+        train_pids = pids[:split_point]
+        val_pids = pids[split_point:]
+
+        train_ds = self.filter_by_patterns(train_pids)
+        val_ds = self.filter_by_patterns(val_pids)
+
+        return train_ds, val_ds, train_pids, val_pids

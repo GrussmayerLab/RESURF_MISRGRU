@@ -1,0 +1,18 @@
+RESURF_MISRGRU - License Summary
+
+This repository includes original code and modified components derived from:
+
+MISR-GRU
+https://github.com/rarefin/MISR-GRU
+Copyright 2019, Element AI Inc. and MILA - Institut québécois d'intelligence artificielle
+
+This repository is made available under the cumulative license terms of:
+- Apache License, Version 2.0
+- Do No Harm License (modified)
+
+You must comply with BOTH licenses when using, modifying, or redistributing this software.
+
+See:
+- LICENSE-APACHE-2.0
+- LICENSE-DO-NO-HARM
+- NOTICE

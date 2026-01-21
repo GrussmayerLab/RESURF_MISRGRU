@@ -105,7 +105,7 @@ def l1_loss(
     Based on the paper: Fourier Space Losses for Efficient Perceptual Image Super-Resolution
     """
 
-    L1 = F.L1Loss()
+    L1 = torch.nn.L1Loss()
     L1_loss = L1(pred, gt)
     return L1_loss
 
@@ -128,27 +128,25 @@ def grad_l2_norm_isolated(
     loss_fn: Callable[[torch.Tensor, torch.Tensor], torch.Tensor],
 ) -> float:
     """
-    Compute ||∇_θ loss_fn(model(inputs), targets)||_2 via a fresh forward pass.
-
-    This does NOT touch your main training graph (no higher-order gradients).
-    Useful for logging gradient scale / debugging exploding gradients.
-
-    Returns
-    -------
-    float
-        L2 norm of gradients across all trainable parameters.
+    Compute ||∇_θ loss_fn(model(inputs), targets)||_2 via a fresh forward.
+    Does NOT touch the main training graph.
     """
     params = _trainable_params(model)
-
-    # Enable gradients just for this isolated computation.
+    # Need grads for this block:
     with torch.enable_grad():
         outputs = model(inputs)
-        loss = loss_fn(outputs, targets)
-
+        loss = loss_fn(outputs, targets)  # do NOT .detach()
         grads = torch.autograd.grad(
-            loss,
-            params,
-            create_graph=False,
-            retain_graph=False,
-            allow_unused=True,
+            loss, params,
+            create_graph=False,   # no higher-order graph
+            retain_graph=False,   # free this graph immediately
+            allow_unused=True
         )
+        sqsum = None
+        for g in grads:
+            if g is not None:
+                v = g.pow(2).sum()
+                sqsum = v if sqsum is None else (sqsum + v)
+        if sqsum is None:
+            return 0.0
+        return float(torch.sqrt(sqsum + 1e-20).item())

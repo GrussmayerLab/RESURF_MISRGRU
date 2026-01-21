@@ -1,0 +1,18 @@
+RESURF_MISRGRU - NOTICE
+
+This repository includes original code and modified components derived from:
+
+MISR-GRU
+https://github.com/rarefin/MISR-GRU
+Copyright 2019, Element AI Inc.
+and MILA - Institut québécois d'intelligence artificielle
+
+The original MISR-GRU repository is made available under the cumulative license terms of:
+- Apache License, Version 2.0
+- Do No Harm License (modified)
+
+This repository reorganizes, refactors, and extends parts of the original implementation
+to support reproducible experiments and release-ready code for an accompanying publication.
+
+If you use this work in academic research, please cite the associated publication and
+consider citing the original MISR-GRU project.

@@ -1,12 +1,12 @@
 {
 
 "data":{
-    "data_root": "examples/simulations/pt_files",
+    "data_root": "/media/KG_miy/FastSOFI_Dataset/Training_mct/pt_files_20f/",
     "input_dir": "input",
     "target_dir": "target",
     "input_token": "_input_",
     "target_token": "_target_",
-    "setting_filter" : ["01","02"],
+    "setting_filter" : ["01"],
     "snr_filter": ["01","02","03","05","06","07","08","09","10","11"],
     "num_frames": 20,
     "pair_by_snr": true,
@@ -39,7 +39,7 @@
 
     "loss": {"type": "L1_Fourier",
              "alpha": 1, 
-             "beta": 0.2,
+             "beta": 1,
              "auto_weighting": true,
              "weight_update_period": 5, 
              "parts": "both"},

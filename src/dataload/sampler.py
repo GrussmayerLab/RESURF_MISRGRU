@@ -11,12 +11,10 @@ that contain multiple pattern IDs (diversity per batch)
 and the # different patterns per batch can be defined.
 """
 
-from __future__ import annotations
 
 import random
 from dataclasses import dataclass
-from typing import Dict, Iterator, List, Optional, Sequence
-
+from typing import Dict, Iterator, List, Optional
 
 class FixedPatternBatchSampler:
     """

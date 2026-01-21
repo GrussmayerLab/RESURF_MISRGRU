@@ -1,22 +1,13 @@
 import torch
 import torch.nn.functional as F
-from tqdm import tqdm
 import os
 import numpy as np
 import torchvision.transforms as transforms
 import random
-import cv2
-from src.models.RESURF_MISRGRU import MISRGRU as cnn
-import json
-import cupy as cp
-import time
-from torch.utils.data import Dataset
-from torch.utils.data import DataLoader, Subset
-from src.dataload import grouped_pattern, sampler
 from src.losses.losses import fourier_space_loss, l1_loss, l2_loss, grad_l2_norm_isolated
+from typing import Optional
 
-
-def set_seed(self, seed = 42):
+def set_seed(seed = 42):
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -64,6 +55,72 @@ def init_model_weights(model, init_cfg: str):
 
 
 
+def build_optimizer(model: torch.nn.Module, conf_training: dict) -> torch.optim.Optimizer:
+    opt_cfg = conf_training.get("optimizer", {})
+    opt_type = str(opt_cfg.get("type", "adam")).lower()
+
+    lr = float(opt_cfg.get("lr", 1e-3))
+    weight_decay = float(opt_cfg.get("weight_decay", 0.0))
+
+    params = [p for p in model.parameters() if p.requires_grad]
+
+    if opt_type == "adam":
+        betas = opt_cfg.get("betas", [0.9, 0.999])
+        betas = (float(betas[0]), float(betas[1]))
+        return torch.optim.Adam(params, lr=lr, betas=betas, weight_decay=weight_decay)
+
+    if opt_type == "adamw":
+        betas = opt_cfg.get("betas", [0.9, 0.999])
+        betas = (float(betas[0]), float(betas[1]))
+        return torch.optim.AdamW(params, lr=lr, betas=betas, weight_decay=weight_decay)
+
+    if opt_type == "sgd":
+        momentum = float(opt_cfg.get("momentum", 0.9))
+        nesterov = bool(opt_cfg.get("nesterov", False))
+        return torch.optim.SGD(params, lr=lr, momentum=momentum, weight_decay=weight_decay, nesterov=nesterov)
+
+    raise ValueError(f"Unknown optimizer type: {opt_type}")
+
+
+def build_scheduler(
+    optimizer: torch.optim.Optimizer,
+    conf_training: dict,
+) -> Optional[torch.optim.lr_scheduler._LRScheduler]:
+    sch_cfg = conf_training.get("scheduler", {})
+    if not sch_cfg or not bool(sch_cfg.get("enabled", False)):
+        return None
+
+    sch_type = str(sch_cfg.get("type", "")).lower()
+
+    if sch_type in {"reduce_on_plateau", "reducelronplateau"}:
+        mode = str(sch_cfg.get("mode", "min"))
+        factor = float(sch_cfg.get("factor", 0.5))
+        patience = int(sch_cfg.get("patience", 5))
+        threshold = float(sch_cfg.get("threshold", 1e-4))
+        min_lr = float(sch_cfg.get("min_lr", 0.0))
+        return torch.optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer,
+            mode=mode,
+            factor=factor,
+            patience=patience,
+            threshold=threshold,
+            min_lr=min_lr,
+        )
+
+    if sch_type == "step":
+        step_size = int(sch_cfg.get("step_size", 50))
+        gamma = float(sch_cfg.get("gamma", 0.5))
+        return torch.optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=gamma)
+
+    if sch_type == "cosine":
+        t_max = int(sch_cfg.get("t_max", conf_training.get("epochs", 200)))
+        eta_min = float(sch_cfg.get("eta_min", 0.0))
+        return torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=t_max, eta_min=eta_min)
+
+    raise ValueError(f"Unknown scheduler type: {sch_type}")
+
+
+
 class LossBundle:
     """
     Minimal loss handler for training.
@@ -101,7 +158,7 @@ class LossBundle:
         self.weight_update_period = int(loss_cfg.get("weight_update_period", 5))
 
         # Only relevant to Fourier loss
-        self.parts = loss_cfg.parts
+        self.parts = str(loss_cfg.get("parts", "both"))  # "both" | "abs" | "phase"
 
     def maybe_update_weights(
         self,
@@ -129,11 +186,11 @@ class LossBundle:
 
         eps = 1e-12
 
-        if lt == "grad_F_L1":
+        if lt == "L1_Fourier":
             g1 = grad_l2_norm_isolated(model, inputs, targets, lambda y,t: fourier_space_loss(y,t,self.parts))
             g2 = grad_l2_norm_isolated(model, inputs, targets, lambda y,t: F.l1_loss(y,t))
 
-        elif lt == "grad_L1_L2":
+        elif lt == "L1_L2":
             g1 = grad_l2_norm_isolated(model, inputs, targets, lambda y,t: F.mse_loss(y,t))
             g2 = grad_l2_norm_isolated(model, inputs, targets, lambda y,t: F.l1_loss(y,t))
         else:  # grad_F_consistency
