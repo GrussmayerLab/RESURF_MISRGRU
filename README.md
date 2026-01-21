@@ -31,7 +31,7 @@ If you use this code in your research, please cite our paper:
 
 ## License & Attribution
 
-This repository contains original code and modified components derived from:
+This repository contains original code and uses the modified MISR-GRU design derived from:
 - MISR-GRU (Element AI Inc. and MILA, 2019): https://github.com/rarefin/MISR-GRU
 
 This repository is distributed under the cumulative terms of:
