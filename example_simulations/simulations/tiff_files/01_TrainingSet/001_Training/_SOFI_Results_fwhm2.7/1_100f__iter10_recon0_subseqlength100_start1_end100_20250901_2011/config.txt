@@ -1,0 +1,97 @@
+Description file for data generated using the multiplane 3D SOFI
+----------------------------------------------------------------
+
+Settings.io
+Settings.io.W = 120
+Settings.io.H = 120
+Settings.io.roi = 
+Settings.io.roisx = 
+Settings.io.roisy = 
+Settings.io.subsave = 0
+Settings.io.blcor = 1
+Settings.io.dcor = 0
+Settings.io.ro = 0
+Settings.io.concatOn = 0
+Settings.io.concatSave = 0
+Settings.io.imagePath = /media/KG_miy/FastSOFI_Dataset/Training_mct/tiff_files/01_Dens1000_b32_NCS/001_Training_/Noisy
+Settings.io.imageName = 11_noisyvid__mct
+Settings.io.prefix = 
+Settings.io.fext = .tif
+Settings.io.bits = 16
+Settings.io.figs = 0
+Settings.io.figshow = 0
+Settings.io.figsave = 0
+Settings.io.figformat = png
+Settings.io.matsave = 0
+Settings.io.seq = 0
+Settings.io.nowID = 20250901_2011
+Settings.io.outputpath = /media/KG_miy/FastSOFI_Dataset/Training_mct/tiff_files/01_Dens1000_b32_NCS/001_Training_/_SOFI_Results_fwhm2.7/1_100f__iter10_recon0_subseqlength100_start1_end100_20250901_2011
+Settings.io.imageFile = /media/KG_miy/FastSOFI_Dataset/Training_mct/tiff_files/01_Dens1000_b32_NCS/001_Training_/Noisy/11_noisyvid__mct
+Settings.io.proctime = 0.013336
+.....
+Settings.blcor
+Settings.blcor.type = monoexp
+Settings.blcor.MaxCorrSamp = 100
+.....
+Settings.dcor
+Settings.dcor.type = SOFI
+Settings.dcor.tag = _drift
+.....
+Settings.sys
+Settings.sys.orders = 1  2  3
+Settings.sys.subseqlength = 100
+Settings.sys.start = 1
+Settings.sys.end = 100
+Settings.sys.sub = 
+Settings.sys.pxy = 100
+Settings.sys.jk = 0
+Settings.sys.block = 1
+Settings.sys.slide = 1
+Settings.sys.frames = 100
+.....
+Settings.dec
+Settings.dec.fwhm = 2.7
+Settings.dec.iter = 10
+Settings.dec.orders = 1  2  3  4  5  6
+Settings.dec.reconvolve = 0
+Settings.dec.psfmodel = gaussian
+Settings.dec.denoise = 0
+.....
+Settings.augLag
+Settings.augLag.deconv = 0
+Settings.augLag.gamma = 4000
+Settings.augLag.FWHM = 3
+Settings.augLag.beta = 4000
+Settings.augLag.alpha = 1
+Settings.augLag.reltol = 0.0001
+Settings.augLag.maxIter = 20
+.....
+Settings.molpar
+Settings.molpar.run = 0
+Settings.molpar.thresh = 0.05
+.....
+Settings.ton
+Settings.ton.run = 0
+Settings.ton.subseqlength = 100
+Settings.ton.numtau = 200
+Settings.ton.runonly = 0
+.....
+Settings.frc
+Settings.frc.run = 0
+Settings.frc.orders = 1  2  3  4
+Settings.frc.bcgsub = 1
+Settings.frc.pixelsize = 100
+.....
+Settings.jk
+Settings.jk.orders = 1  2  3  4  5  6
+.....
+Settings.rep
+Settings.rep.run = 0
+.....
+Settings.postp
+Settings.postp.type = WBNS
+Settings.postp.settings = 3.2           2           3
+.....
+Settings.method
+Settings.method = sofi2d
+.....
