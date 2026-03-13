@@ -26,7 +26,7 @@ Target SOFI images are created by using:
 ## Citation
 
 If you use this code in your research, please cite our paper: 
-**[Enabling Real-Time Fluctuation-Based Super Resolution Imaging](https://doi.org/10.1101/2025.06.05.658028)**
+**[A Lightweight Deep Learning Framework for Fast, Real-Time Super-Resolution Fluctuation Imaging](https://doi.org/10.1101/2025.06.05.658028)**
 
 ## License & Attribution
 
