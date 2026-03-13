@@ -14,11 +14,11 @@ pip install -r requirements.txt
 pip install -r requirements-gpu.txt
 ```
 # Data Preparation
-Training expects .pt tensors with naming convention (check simulation_examples) 
-(simulationID)(PatternID)_input_(settingID).pt, 
-(simulationID)(PatternID)_target_(settingID).pt
+Training expects .pt tensors with naming convention (check example_simulations) 
 
 If you start from TIFF simulations the scripts/prepare_pt_from_tiff.py with our public dataset or generate your simulations using our public MATLAB tool.
+ 
+**[BlinkingSimulator](https://github.com/GrussmayerLab/BlinkingSimulator)**
 
 
 ## Citation

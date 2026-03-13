@@ -8,7 +8,7 @@ It is provided to help users:
 - inspect example input/target tensors without generating simulations themselves
 
 > ✅ The full simulation generation pipeline (MATLAB) is maintained in a separate repository:  
-> **<ADD_SIMULATION_REPO_LINK_HERE>**
+> **[BlinkingSimulator](https://github.com/GrussmayerLab/BlinkingSimulator)**
 
 ---
 
