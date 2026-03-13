@@ -14,15 +14,11 @@ pip install -r requirements.txt
 pip install -r requirements-gpu.txt
 ```
 # Data Preparation
-“Training expects .pt tensors with naming convention …”
+Training expects .pt tensors with naming convention <simulationID><PatternID>_input_<settingID>.pt, 
+<simulationID><PatternID>_target_<settingID>.pt
 
-“If you start from TIFF simulations, see README in examples/simulations and use scripts/prepare_pt_from_tiff.py”
+If you start from TIFF simulations the scripts/prepare_pt_from_tiff.py with our public dataset or generate your simulations using our public MATLAB tool.
 
-“MATLAB simulation generator lives in <other repo link>”
-
-"For the complete simulation dataset used in training for live-cell conditions visit:  "
-
-""
 
 ## Citation
 
