@@ -20,6 +20,8 @@ If you start from TIFF simulations the scripts/prepare_pt_from_tiff.py with our 
  
 **[BlinkingSimulator](https://github.com/GrussmayerLab/BlinkingSimulator)**
 
+Target SOFI images are created by using:
+**[sofipackage](https://github.com/kgrussmayer/sofipackage)**
 
 ## Citation
 
